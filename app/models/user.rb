@@ -1,9 +1,9 @@
 class User < ApplicationRecord
-  before_create :generate_uuid
+  before_validation :generate_uuid
   validates :name, presence: true
   validates :uuid, uniqueness: true, presence: true
 
   def generate_uuid
-    uuid = SecureRandom.uuid
+    self.uuid = SecureRandom.uuid
   end
 end
