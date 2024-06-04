@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources 'users', only: %i[create show], param: :uuid do
     collection do
       get '/', to: 'users#uncorrect_http_method'
+      get '/activation_help', to: 'users/activations#activation_help'
     end
     resource :activation, only: %i[create], module: 'users'
   end
