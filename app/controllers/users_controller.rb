@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :check_token, only: [:create]
+  before_action :basic_auth, only: [:show]
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def uncorrect_http_method
@@ -15,6 +16,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @user = User.find_by(uuid: params[:uuid])
+  end
+
   private
   def user_params
     params.permit(:name)
@@ -28,6 +33,12 @@ class UsersController < ApplicationController
       render json: {message: "伝え忘れてました。一応簡易的な認証機能をつけてます。AuthorizationヘッダーにBearerトークンを設定してください。トークンは本日の日付です。フォーマットはyyyy-mm-ddです。"}
     elsif token != today
       render json: {message: "Bearerトークンを正しく設定してください。トークンは本日の日付です。フォーマットはyyyy-mm-ddです。"}
+    end
+  end
+
+  def basic_auth
+    authenticate_or_request_with_http_basic do |username, password|
+      username == Rails.application.credentials.basic_auth[:username] && password == Rails.application.credentials.basic_auth[:password]
     end
   end
 end
