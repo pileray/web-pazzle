@@ -8,4 +8,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "starts#root"
   resource 'start', only: %i[show]
+  resources 'users', only: %i[create] do
+    collection do
+      get '/', to: 'users#uncorrect_http_method'
+    end
+  end
 end
