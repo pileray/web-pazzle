@@ -1,0 +1,29 @@
+<div class="container pt-5">
+  <div class="row">
+    <% if flash[:error_message] %>
+      <ul "alert alert-danger">
+        <li>
+          <%= flash[:error_message] %>
+        </li>
+      </ul>
+    <% end %>
+    <%= form_with model: @post, url: posts_path(uuid: params[:uuid]), data: { turbo: false } do |f| %>
+      <% if @post.errors.any? %>
+        <ul "alert alert-danger">
+          <% @post.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <div data-mdb-input-init class="form-outline mb-4">
+        <%= f.text_area :body, id: "body_field", class: "form-control" %>
+        <%= f.label 'コメント', class: "form-label", for: "bosy_field"  %>
+      </div>
+      <div data-mdb-input-init class="form-outline mb-4">
+        <%= f.text_field :onetime_password, id: "onetime_password_field", class: "form-control" %>
+        <%= f.label :onetime_password, class: "form-label", for: "onetime_password_field"  %>
+      </div>
+      <%= f.submit '完走のコメントを書く', class: 'btn btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>

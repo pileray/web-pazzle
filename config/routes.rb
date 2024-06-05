@@ -6,5 +6,14 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "starts#root"
+  resource 'start', only: %i[show]
+  resources 'users', only: %i[create show], param: :uuid do
+    collection do
+      get '/', to: 'users#uncorrect_http_method'
+      get '/activation_help', to: 'users/activations#activation_help'
+    end
+    resource :activation, only: %i[create], module: 'users'
+  end
+  resources 'posts', only: %i[index new create]
 end

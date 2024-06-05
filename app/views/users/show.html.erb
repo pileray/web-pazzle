@@ -1,0 +1,22 @@
+<div class="container pt-5">
+  <div class="row">
+    <% if flash[:error_message] %>
+      <ul>
+        <li>
+          <%= flash[:error_message] %>
+        </li>
+      </ul>
+    <% end %>
+    <%= form_with model: @user, url: user_activation_path(@user.uuid), method: :post, data: { turbo: false } do |f| %>
+      <div data-mdb-input-init class="form-outline mb-4">
+        <%= f.text_field :name, id: "name_field", class: "form-control", readonly: true %>
+        <%= f.label :name, class: "form-label", for: "name_field"  %>
+      </div>
+      <div data-mdb-input-init class="form-outline mb-4">
+        <%= f.text_field :secret_keyword, id: "secret_keyword_field", class: "form-control" %>
+        <%= f.label :secret_keyword, class: "form-label", for: "secret_keyword_field"  %>
+      </div>
+      <%= f.submit '登録', class: 'btn btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>
