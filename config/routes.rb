@@ -15,4 +15,5 @@ Rails.application.routes.draw do
     end
     resource :activation, only: %i[create], module: 'users'
   end
+  resources 'posts', only: %i[index new create]
 end

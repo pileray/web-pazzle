@@ -1,0 +1,27 @@
+<div class="container pt-5">
+  <div class="row">
+    <h1>おめでとうございます！WebPazzle完走です！</h1>
+    <hr>
+    <h2>学習項目おさらい</h2>
+    <p>中略</p>
+    <hr>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">名前</th>
+          <th scope="col">コメント</th>
+          <th scope="col">完遂日時</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts.each do |post| %>
+          <tr>
+            <td><%= post.user.name %></td>
+            <td><%= post.body %></td>
+            <td><%= l(post.created_at)%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
